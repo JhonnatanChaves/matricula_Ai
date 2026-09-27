@@ -1,0 +1,32 @@
+# Dependências
+node_modules/
+
+# Variáveis de ambiente
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+
+# Logs
+*.log
+logs/
+
+# Arquivos temporários
+tmp/
+temp/
+
+# Cobertura de testes
+coverage/
+
+# Arquivos do sistema operacional
+.DS_Store
+Thumbs.db
+
+# IDEs
+.vscode/
+.idea/
+
+# Arquivos de build
+dist/
+build/
