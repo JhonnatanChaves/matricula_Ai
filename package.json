@@ -12,6 +12,7 @@
   "description": "",
   "dependencies": {
     "express": "^5.2.1",
-    "mogoose": "^0.0.1-security"
+    "mogoose": "^0.0.1-security",
+    "mongodb": "^7.7.0"
   }
 }

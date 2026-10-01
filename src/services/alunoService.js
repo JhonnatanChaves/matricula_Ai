@@ -1,22 +1,42 @@
 const Aluno = require('../models/aluno');
+const conectarMongoDB = require("../database/mongodb");
+const {ObjectId} = require("mongodb");
 
 //array será usado como base de dados temporária
 const alunos = [];
 
-const criarAluno = (nome, email, dataNascimento) => 
+const criarAluno = async (nome, email, dataNascimento) => 
 {
-    const aluno = new Aluno(alunos.length + 1, nome, email, dataNascimento);
+    const db = await conectarMongoDB();
 
-    alunos.push(aluno);
+    const aluno = new Aluno(nome, email, dataNascimento);
+
+    await db.collection("alunos").insertOne(aluno);
+
+    return aluno;
 };
 
-const obterAlunos = () => {
-    return alunos.filter(a => !a.indExcluido);
+const obterAlunos = async () => 
+{
+    const db = await conectarMongoDB();
+
+    return await db
+                .collection("alunos")
+                .find({indExcluido: {$ne: true}})
+                .toArray();
 };
 
-const obterAlunoPorId = (id) =>{
+const obterAlunoPorId = async (id) =>
+{
+    const db = await conectarMongoDB();
 
-    return alunos.find(a => a.id === id && !a.indExcluido);
+    return await db
+                 .collection("alunos")
+                 .findOne
+                 ({
+                        _id: new ObjectId(id), 
+                        indExcluido: {$ne: true}
+                 });
 }
 
 const atualizarAluno = (id, aluno) => 
